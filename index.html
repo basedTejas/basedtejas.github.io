@@ -21,6 +21,16 @@
       --font-body: 'Epilogue', sans-serif;
     }
 
+    [data-theme="dark"] {
+      --bg:        #14161a;
+      --surface:   #1b1e23;
+      --border:    #2c3036;
+      --text:      #f0efeb;
+      --muted:     #9a978f;
+      --accent:    #4fae84;
+      --accent-lt: #1d2b24;
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -31,6 +41,7 @@
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     nav {
@@ -44,7 +55,10 @@
       border-bottom: 1px solid var(--border);
       background: rgba(255,255,255,0.92);
       backdrop-filter: blur(16px);
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
+
+    [data-theme="dark"] nav { background: rgba(20,22,26,0.86); }
 
     .nav-logo {
       font-family: var(--font-head);
@@ -59,6 +73,7 @@
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 2.5rem;
       list-style: none;
     }
@@ -76,6 +91,35 @@
 
     .nav-links a:hover,
     .nav-links a.active { color: var(--accent); }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      padding: 0;
+    }
+
+    .theme-toggle:hover { border-color: var(--accent); }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text);
+      fill: none;
+      stroke-width: 2;
+      transition: stroke 0.2s;
+    }
+
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 
     .hero {
       min-height: 100vh;
@@ -468,6 +512,12 @@
     <ul class="nav-links">
       <li><a href="index.html" class="active">About</a></li>
       <li><a href="projects.html">Projects</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
     </ul>
   </nav>
 
@@ -564,6 +614,26 @@
         setTimeout(() => btn.textContent = 'Copy', 2000);
       });
     }
+
+    (function() {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      if (initial === 'dark') root.setAttribute('data-theme', 'dark');
+
+      toggle.addEventListener('click', () => {
+        const isDark = root.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          root.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          root.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    })();
   </script>
 
 </body>
