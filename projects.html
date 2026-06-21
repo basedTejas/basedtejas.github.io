@@ -21,6 +21,16 @@
       --font-body: 'Epilogue', sans-serif;
     }
 
+    [data-theme="dark"] {
+      --bg:        #14161a;
+      --surface:   #1b1e23;
+      --border:    #2c3036;
+      --text:      #f0efeb;
+      --muted:     #9a978f;
+      --accent:    #4fae84;
+      --accent-lt: #1d2b24;
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -31,6 +41,7 @@
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     /* ── NAV ── */
@@ -45,7 +56,10 @@
       border-bottom: 1px solid var(--border);
       background: rgba(255,255,255,0.92);
       backdrop-filter: blur(16px);
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
+
+    [data-theme="dark"] nav { background: rgba(20,22,26,0.86); }
 
     .nav-logo {
       font-family: var(--font-head);
@@ -60,6 +74,7 @@
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 2.5rem;
       list-style: none;
     }
@@ -76,6 +91,35 @@
 
     .nav-links a:hover,
     .nav-links a.active { color: var(--accent); }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      padding: 0;
+    }
+
+    .theme-toggle:hover { border-color: var(--accent); }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text);
+      fill: none;
+      stroke-width: 2;
+      transition: stroke 0.2s;
+    }
+
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 
     /* ── PAGE HEADER ── */
     .page-header {
@@ -195,6 +239,7 @@
 
     .tag.accent { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); }
     .tag.amber  { border-color: #b08030; color: #b08030; background: #fdf6e9; }
+    [data-theme="dark"] .tag.amber { background: #2a2210; }
 
     .project-title {
       font-family: var(--font-head);
@@ -337,6 +382,12 @@
     <ul class="nav-links">
       <li><a href="index.html">About</a></li>
       <li><a href="projects.html" class="active">Projects</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
     </ul>
   </nav>
 
@@ -372,12 +423,12 @@
       </div>
     </div>
 
-    <!-- Project 2 -->
+    <!-- Project 2: Notes REST API — now complete -->
     <div class="project-card">
       <div class="project-number">02</div>
       <div class="project-body">
         <div class="project-tags">
-          <span class="tag amber">Coming Soon</span>
+          <span class="tag accent">Complete</span>
           <span class="tag">Node.js</span>
           <span class="tag">Express</span>
           <span class="tag">MongoDB</span>
@@ -389,33 +440,36 @@
         </p>
       </div>
       <div class="project-links">
-        <a href="https://github.com/basedTejas" target="_blank" class="proj-link disabled">
+        <a href="https://github.com/basedTejas" target="_blank" class="proj-link">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
         </a>
       </div>
     </div>
 
-    <!-- Project 3 -->
+    <!-- Project 3: Weather website — now complete -->
     <div class="project-card">
       <div class="project-number">03</div>
       <div class="project-body">
         <div class="project-tags">
-          <span class="tag amber">Coming Soon</span>
-          <span class="tag">React</span>
+          <span class="tag accent">Complete</span>
           <span class="tag">JavaScript</span>
           <span class="tag">REST API</span>
           <span class="tag">Frontend</span>
         </div>
-        <div class="project-title">Frontend Project</div>
+        <div class="project-title">Weather Website</div>
         <p class="project-desc">
-          A React-based frontend application — details coming soon.
+          A weather lookup app that pulls live forecast data from a public weather API and displays current conditions in a clean, responsive UI.
         </p>
       </div>
       <div class="project-links">
-        <a href="https://github.com/basedTejas" target="_blank" class="proj-link disabled">
+        <a href="https://github.com/basedTejas" target="_blank" class="proj-link">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
+        </a>
+        <a href="#" target="_blank" class="proj-link" id="weatherLiveLink">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+          Live Site
         </a>
       </div>
     </div>
@@ -455,6 +509,28 @@
     <p>© 2026 Tejas. Built with HTML & CSS.</p>
     <p><a href="mailto:tejas2k5m@gmail.com">tejas2k5m@gmail.com</a> &nbsp;·&nbsp; <a href="tel:+918840874628">+91 88408 74628</a></p>
   </footer>
+
+  <script>
+    (function() {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      if (initial === 'dark') root.setAttribute('data-theme', 'dark');
+
+      toggle.addEventListener('click', () => {
+        const isDark = root.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          root.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          root.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
